@@ -5,6 +5,7 @@ import shap
 
 from preprocessing import load_and_prepare_data
 from modelling import train_models, evaluate_model, save_models
+from utils import ensure_directory, save_metadata
 
 
 def run_pipeline():
@@ -17,8 +18,9 @@ def run_pipeline():
     OUTPUTS_PATH = Path("outputs")
     MODELS_PATH = Path("models")
 
-    OUTPUTS_PATH.mkdir(parents=True, exist_ok=True)
-    MODELS_PATH.mkdir(parents=True, exist_ok=True)
+    ensure_directory(OUTPUTS_PATH)
+    ensure_directory(MODELS_PATH)
+
 
     # -------------------------------
     # Load & preprocess data
