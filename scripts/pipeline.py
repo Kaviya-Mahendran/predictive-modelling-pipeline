@@ -38,10 +38,10 @@ def run_pipeline():
     # Evaluate models
     # -------------------------------
     print("Evaluating models...")
-    log_metrics, log_fpr, log_tpr, log_proba = evaluate_model(
+    log_metrics, log_fpr, log_tpr, _ = evaluate_model(
         logistic_model, X_test, y_test
     )
-    rf_metrics, rf_fpr, rf_tpr, rf_proba = evaluate_model(
+    rf_metrics, rf_fpr, rf_tpr, _ = evaluate_model(
         rf_model, X_test, y_test
     )
 
@@ -53,7 +53,6 @@ def run_pipeline():
         index=["Logistic Regression", "Random Forest"],
     )
     comparison_df.to_csv(OUTPUTS_PATH / "model_comparison.csv")
-
     print("Model comparison saved.")
 
     # -------------------------------
@@ -70,36 +69,52 @@ def run_pipeline():
     plt.tight_layout()
     plt.savefig(OUTPUTS_PATH / "roc_curve.png")
     plt.close()
-
     print("ROC curve saved.")
 
     # -------------------------------
     # SHAP Interpretation (Tree model)
     # -------------------------------
+   
     print("Generating SHAP explanations...")
-    explainer = shap.TreeExplainer(rf_model)
-    shap_values = explainer.shap_values(X_test)
 
-    shap.summary_plot(
-        shap_values[1],
-        X_test,
-        feature_names=feature_names,
-        show=False,
+    # Convert to numeric numpy arrays
+    X_test_shap = X_test.astype(float)
+
+    explainer = shap.TreeExplainer(rf_model)
+    shap_values = explainer.shap_values(X_test_shap)[1]  # churn = 1
+
+    # Compute mean absolute SHAP values
+    shap_feature_count = shap_values.shape[1]
+    shap_feature_names = X_test_shap.columns[:shap_feature_count]
+
+    shap_importance = (
+    pd.DataFrame({
+        "feature": shap_feature_names,
+        "mean_abs_shap": abs(shap_values).mean(axis=0)
+    })
+    .sort_values("mean_abs_shap", ascending=False)
     )
+
+
+    # Plot SHAP importance manually (robust)
+    plt.figure(figsize=(8, 5))
+    plt.barh(
+    shap_importance["feature"],
+    shap_importance["mean_abs_shap"]
+    )
+    plt.gca().invert_yaxis()
+    plt.xlabel("Mean |SHAP value|")
+    plt.title("Feature Importance (SHAP)")
     plt.tight_layout()
     plt.savefig(OUTPUTS_PATH / "shap_summary.png")
     plt.close()
 
     print("SHAP summary plot saved.")
-
     # -------------------------------
     # Save models
     # -------------------------------
     save_models(logistic_model, rf_model)
     print("Models saved.")
-
     print("Predictive modelling pipeline completed successfully.")
-
-
 if __name__ == "__main__":
     run_pipeline()
