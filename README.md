@@ -135,6 +135,13 @@ models/*.pkl
 Persisted, reusable trained models.
 
 These outputs are designed to support both technical review and stakeholder discussion.
+## Architecture Overview
+
+![Architecture Diagram](diagrams/architecture.png)
+
+## Pipeline Flow
+
+![Pipeline Overview](diagrams/pipeline_overview.png)
 
 **6. Why This Matters**
 Predictive modelling is only valuable when it is trustworthy, interpretable, and reusable.
