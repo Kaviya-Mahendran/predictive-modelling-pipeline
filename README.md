@@ -191,3 +191,18 @@ python scripts/pipeline.py
 
 All outputs will be generated in the outputs/ and models/ directories.
 
+Required packages:
+pandas
+scikit-learn
+matplotlib
+shap
+joblib
+
+### Evaluation Summary
+Preview of model comparison:
+
+| Model              | Accuracy | Precision | Recall | ROC-AUC |
+|-------------------|---------:|----------:|--------:|---------:|
+| Logistic Regression | 0.XX     | 0.XX      | 0.XX    | 0.XX     |
+| Random Forest       | 0.XX     | 0.XX      | 0.XX    | 0.XX     |
+
