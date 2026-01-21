@@ -1,5 +1,7 @@
-Predictive Modelling Pipeline for Customer / Donor Behaviour
-1. Overview
+**Predictive Modelling Pipeline for Customer / Donor Behaviour**
+
+
+**1. Overview**
 
 Predictive models are often built as isolated experiments, but their real value comes from how reliably they can be trained, evaluated, interpreted, and reused as part of a wider analytics system.
 
@@ -9,7 +11,7 @@ The project demonstrates how structured features can be transformed into predict
 
 Although implementations vary across organisations, these principles apply broadly to most data analytics environments.
 
-2. Architecture Overview
+**2. Architecture Overview**
 
 High-level flow:
 
@@ -36,7 +38,7 @@ Reproducible artefacts saved at each stage
 
 Interpretability treated as a first-class step, not an afterthought
 
-3. Pipeline Design (Step-by-Step)
+**3. Pipeline Design (Step-by-Step)**
 Step 1: Feature Ingestion
 
 The pipeline ingests a privacy-aware feature set (sample_features.csv) containing behavioural and engagement signals such as recency, frequency, and aggregated activity metrics. No directly identifiable personal data is used.
@@ -80,7 +82,6 @@ ROC-AUC
 A side-by-side comparison is saved as a CSV artefact to support evidence-based model selection.
 
 Step 5: Interpretability (SHAP)
-
 To understand why predictions are made, SHAP values are computed for the tree-based model.
 Due to known stability issues in SHAP plotting APIs, feature importance is manually aggregated using mean absolute SHAP values, ensuring robustness and reproducibility.
 
@@ -100,7 +101,7 @@ model comparison metrics
 
 This makes the pipeline reusable and auditable.
 
-4. Code Highlights
+**4. Code Highlights**
 Model Comparison
 logistic_model, rf_model = train_models(X_train, y_train)
 
@@ -117,7 +118,7 @@ shap_importance = pd.DataFrame({
 
 This approach avoids brittle dependencies on plotting internals while retaining interpretability.
 
-5. Outputs
+**5. Outputs**
 
 The pipeline produces the following artefacts:
 
@@ -135,8 +136,7 @@ Persisted, reusable trained models.
 
 These outputs are designed to support both technical review and stakeholder discussion.
 
-6. Why This Matters
-
+**6. Why This Matters**
 Predictive modelling is only valuable when it is trustworthy, interpretable, and reusable.
 
 This pipeline demonstrates:
@@ -149,7 +149,7 @@ how analytics workflows can be structured as long-term systems rather than one-o
 
 The design is suitable for organisations that need to make data-driven decisions responsibly, particularly where explainability and governance are as important as accuracy.
 
-7. Limitations & Ethics
+**7. Limitations & Ethics**
 
 The dataset is synthetic and intended for demonstration purposes.
 
@@ -161,7 +161,7 @@ Care should be taken to avoid reinforcing bias when deploying predictive scores.
 
 Privacy-safe features and explicit interpretability steps are used to reduce ethical and operational risk.
 
-8. Reflection & Future Enhancements
+**8. Reflection & Future Enhancements**
 
 Building this pipeline reinforced the importance of model comparison, interpretability, and robustness over raw performance metrics alone.
 
@@ -177,7 +177,7 @@ extension to survival or uplift modelling
 
 The same architectural principles would apply at larger scales.
 
-9. How to Reproduce
+**9. How to Reproduce**
 pip install -r requirements.txt
 python scripts/pipeline.py
 
