@@ -60,6 +60,11 @@ pip install -r requirements.txt
 python scripts/pipeline.py
 ```
 
+## Visual outputs
+
+- [Model comparison and evaluation outputs](./outputs/) — generated CSV/plots from the reproducible pipeline.
+- [Notebooks](./notebooks/) — exploratory analysis and interpretation.
+
 ## Evaluation discipline
 
 The repository deliberately avoids placeholder metrics. Results should be generated from the actual dataset and code version.
