@@ -2,6 +2,10 @@
 
 > A reproducible end-to-end classification workflow covering feature preparation, model comparison, evaluation, SHAP interpretability and model persistence.
 
+[![Python](https://img.shields.io/badge/Python-3.x-blue)](https://www.python.org/)
+[![ML](https://img.shields.io/badge/ML-scikit--learn-orange)](https://scikit-learn.org/)
+[![Explainability](https://img.shields.io/badge/Explainability-SHAP-purple)](https://shap.readthedocs.io/)
+
 ## Problem
 
 This project demonstrates how behavioural features can be transformed into predictive signals and evaluated as a reusable analytics workflow.
@@ -12,27 +16,22 @@ The emphasis is broader than accuracy:
 
 ## Pipeline architecture
 
-```text
-Feature Dataset
-      ↓
-Validation & Preprocessing
-      ↓
-Train / Test Split
-      ↓
-Baseline Model ───────┐
-Tree-based Model ─────┤
-                      ↓
-             Comparative Evaluation
-                      ↓
-                SHAP Analysis
-                      ↓
-       Metrics / Plots / Saved Models
+```mermaid
+flowchart LR
+    A[Feature Dataset] --> B[Validation & Preprocessing]
+    B --> C[Train / Test Split]
+    C --> D[Logistic Regression]
+    C --> E[Random Forest]
+    D --> F[Comparative Evaluation]
+    E --> F
+    F --> G[SHAP Analysis]
+    G --> H[Metrics / Plots / Saved Models]
 ```
 
 ## Models
 
-- Logistic Regression as a transparent baseline
-- Random Forest for non-linear relationships
+- **Logistic Regression** — transparent baseline
+- **Random Forest** — non-linear tree-based model
 
 Evaluation includes accuracy, precision, recall and ROC-AUC.
 
@@ -52,21 +51,45 @@ models/
 └── *.pkl
 ```
 
-## Reproduce
+## Reproduce locally
 
 ```bash
+git clone https://github.com/Kaviya-Mahendran/predictive-modelling-pipeline.git
+cd predictive-modelling-pipeline
 pip install -r requirements.txt
 python scripts/pipeline.py
 ```
 
 ## Evaluation discipline
 
-The repository does not present placeholder metrics as results. Re-run the pipeline and record the current metrics from the actual dataset and code version.
+The repository deliberately avoids placeholder metrics. Results should be generated from the actual dataset and code version.
 
 | Model | Accuracy | Precision | Recall | ROC-AUC |
 |---|---:|---:|---:|---:|
 | Logistic Regression | Run pipeline | Run pipeline | Run pipeline | Run pipeline |
 | Random Forest | Run pipeline | Run pipeline | Run pipeline | Run pipeline |
+
+### What a production-ready evaluation would add
+
+- Cross-validation
+- Time-aware validation where appropriate
+- Probability calibration
+- Threshold analysis
+- Class-imbalance assessment
+- Reproducible experiment configuration
+- Automated regression tests for model outputs
+
+## Project structure
+
+```text
+predictive-modelling-pipeline/
+├── scripts/       # pipeline execution
+├── models/        # persisted model artefacts
+├── outputs/       # metrics and visual outputs
+├── notebooks/     # exploration / analysis
+├── tests/         # validation and regression tests
+└── README.md
+```
 
 ## Limitations
 
